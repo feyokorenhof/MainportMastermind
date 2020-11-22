@@ -47,7 +47,7 @@ def upperText():
     textAlign(CENTER)
     text('Gooi de linker of rechter dobbelsteen', width/2, 175)
     textSize(25)
-    text('De linker dobbelsteen heeft 3 ogen en de rechter dobbelsteen heeft 6 ogen', width/2, 275)
+    text('Dobbel en bepaal wat je deze beurt mag doen', width/2, 275)
 
 def rollButtons(): #the lower two buttons
     fill(255, 255, 255)
