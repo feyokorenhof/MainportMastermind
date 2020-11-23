@@ -19,7 +19,7 @@ def setup():
     dobbelstenen.append({'dobbel': db2, 'ogen': 6, 'gerold': -1})
     
 def draw():
-    background(255)    
+    background(47, 46, 48)  
     if main_menu.game_started:     
         upperText()
         global dobbelstenen
