@@ -25,18 +25,17 @@ class Dobbel():
         image(img, (width/4)*w, 600, 490, 490)
         
     def animateDice(self, w):
+        if self.rolling == False:
+            return
+        
+        img = self.images[self.animationFrame]
+        image(img, (width/4)*w, 600, 490, 490)
+        self.animationFrame += 1
+        
         if self.animationFrame == self.ogen-1 or self.rolling == False:
             self.animationFrame = 0
             self.rolling = False
             return
-                
-        fill(255, 255, 255)
-        rectMode(CENTER)
-        rect((width/4)*3, 600, 500, 500)
-        imageMode(CENTER)
-        img = self.images[self.animationFrame]
-        image(img, (width/4)*w, 600, 490, 490)
-        self.animationFrame += 1
         
         
     
