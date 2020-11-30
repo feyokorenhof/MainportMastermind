@@ -1,20 +1,35 @@
 from MainMenu import *
-from MainGame import *
 from Dobbel import *
 def setup():
-    fullScreen()  
+    fullScreen()    
+    
+    # Load images
+    bg_menu = loadImage('images/bg_menu.jpg')
+    bg_menu.resize(width, height)
+    start_btn = loadImage('images/startbutton.png')
+    start_btn.resize(450, 100)
+    exit_btn = loadImage('images/exitbutton.png')
+    exit_btn.resize(450, 100)
+    logo = loadImage('images/logo.png')
+    logo.resize(width/5, height/3)
     
     # Main Menu class
     global main_menu
-    main_menu = MainMenu()
-    global main_game
-    main_game = MainGame()
+    main_menu = MainMenu(bg_menu, logo, start_btn, exit_btn)
+    
     
     # Dobbel
     global dobbelstenen
     dobbelstenen = []
-    db1 = Dobbel(6)
-    db2 = Dobbel(6)
+    images = []
+    for i in range(6):
+        _imgstr = 'images/dobbel/dice' + str(i+1) + '.png'
+        images.append(loadImage(_imgstr))
+        
+    
+        
+    db1 = Dobbel(6, images)
+    db2 = Dobbel(6, images)
     dobbelstenen.append({'dobbel': db1, 'ogen': 6, 'gerold': -1})
     dobbelstenen.append({'dobbel': db2, 'ogen': 6, 'gerold': -1})
     
@@ -25,7 +40,7 @@ def draw():
         global dobbelstenen
         if len(dobbelstenen) <= 0:
             return
-        
+        isRolling = False
         hoogsteDobbel = dobbelstenen[0]['dobbel']
         for i,d in enumerate(dobbelstenen):    
             if d['dobbel'].ogen > hoogsteDobbel.ogen:
@@ -35,21 +50,18 @@ def draw():
                 w = 1
             else:
                 w = 3
-            if hoogsteDobbel.rolling:
+            if d['dobbel'].rolling:
                 d['dobbel'].animateDice(w)
                 isRolling = True
             else:
                 d['dobbel'].drawDice(w)
-                isRolling = False
+                isRolling = dobbelstenen[0]['dobbel'].rolling or dobbelstenen[1]['dobbel'].rolling
         rollButtons()
         if isRolling:
             time.sleep(0.5)
         
     else:
         main_menu.main_menu()
-    
-    if main_game.paused:
-        main_menu.pause_menu()
 
         
 def mousePressed():
@@ -60,17 +72,7 @@ def mousePressed():
         for d in dobbelstenen:
             d['dobbel'].rollDice()
       else:            
-        global main_menu
         main_menu.input_check(mouseX, mouseY) 
-
-      
-
-def keyPressed():
-    if key == 'p' or key == 'P':
-        global main_game
-        global main_menu
-        if main_menu.game_started:
-            main_game.paused = not main_game.paused
         
         
 
