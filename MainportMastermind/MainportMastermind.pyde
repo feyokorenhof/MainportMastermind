@@ -1,17 +1,32 @@
+add_library('sound')
 from MainMenu import *
 from Dobbel import *
 def setup():
     fullScreen()    
     
+    
+    
+    global themesong 
+    themesong = SoundFile(this, "../sound/seaofthieves.mp3")
+    themesong.amp(0.1)
+    themesong.play()  
+    
+    global rollSound
+    rollSound = SoundFile(this, "../sound/diceroll.mp3")
+    rollSound.amp(1.0)  
+    
     # Load images
     bg_menu = loadImage('images/bg_menu.jpg')
     bg_menu.resize(width, height)
-    start_btn = loadImage('images/startbutton.png')
+    start_btn = loadImage('images/dobbelstenen.png')
     start_btn.resize(450, 100)
     exit_btn = loadImage('images/exitbutton.png')
     exit_btn.resize(450, 100)
     logo = loadImage('images/logo.png')
     logo.resize(width/5, height/3)
+    
+    global playing
+    playing = False
     
     # Main Menu class
     global main_menu
@@ -66,14 +81,19 @@ def draw():
         
 def mousePressed():
   if mouseButton == LEFT:
-      global main_menu
-      if main_menu.game_started:
+    global main_menu
+    if main_menu.game_started:
         global dobbelstenen
         for d in dobbelstenen:
-            d['dobbel'].rollDice()
-      else:            
+            if not d['dobbel'].rolling:
+                d['dobbel'].rollDice()
+        global rollSound
+        if not rollSound.isPlaying():
+            rollSound.play()
+    else:            
         main_menu.input_check(mouseX, mouseY) 
-        
+        playing = False
+            
         
 
 def MouseInSpace(x, y, w, h):
