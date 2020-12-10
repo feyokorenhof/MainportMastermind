@@ -1,15 +1,19 @@
 add_library('sound')
 from MainMenu import *
 from Dobbel import *
+from Spelvordering import *
+loaded = False
+main_menu = False
+spelvordering = False
 def setup():
-    fullScreen()    
+    fullScreen()
+    thread("load")      
     
-    
-    
+def load():
+    global loaded
     global themesong 
     themesong = SoundFile(this, "../sound/seaofthieves.mp3")
-    themesong.amp(0.1)
-    themesong.play()  
+    
     
     global rollSound
     rollSound = SoundFile(this, "../sound/diceroll.mp3")
@@ -20,6 +24,10 @@ def setup():
     bg_menu.resize(width, height)
     start_btn = loadImage('images/dobbelstenen.png')
     start_btn.resize(450, 100)
+    spel_btn = loadImage('images/spelvordering.png')
+    spel_btn.resize(450, 100)
+    handl_btn = loadImage('images/handleiding.png')
+    handl_btn.resize(450, 100)
     exit_btn = loadImage('images/exitbutton.png')
     exit_btn.resize(450, 100)
     logo = loadImage('images/logo.png')
@@ -28,9 +36,15 @@ def setup():
     global playing
     playing = False
     
+    mm_btns = [
+               {'btn': start_btn, 'type': 'start'},
+               {'btn': spel_btn, 'type': 'spelvordering'},
+               {'btn': handl_btn, 'type': 'handleiding'},
+               {'btn': exit_btn, 'type': 'exit'},
+               ]
     # Main Menu class
     global main_menu
-    main_menu = MainMenu(bg_menu, logo, start_btn, exit_btn)
+    main_menu = MainMenu(bg_menu, logo, mm_btns)
     
     
     # Dobbel
@@ -47,10 +61,18 @@ def setup():
     db2 = Dobbel(6, images)
     dobbelstenen.append({'dobbel': db1, 'ogen': 6, 'gerold': -1})
     dobbelstenen.append({'dobbel': db2, 'ogen': 6, 'gerold': -1})
+    loaded = True
+    
+    # Spelvordering
+    global spelvordering
+    spelvordering = Spelvordering()
+    
     
 def draw():
     background(47, 46, 48)  
-    if main_menu.game_started:     
+    if not loaded:
+        return
+    if main_menu.dobbeling:   
         upperText()
         global dobbelstenen
         if len(dobbelstenen) <= 0:
@@ -74,27 +96,32 @@ def draw():
         rollButtons()
         if isRolling:
             time.sleep(0.5)
-        
+    elif main_menu.inspecting:
+        spelvordering.render()
     else:
         main_menu.main_menu()
 
+    global themesong
+    if not themesong.isPlaying():
+        themesong.amp(0.1)
+        themesong.play()  
+
         
 def mousePressed():
-  if mouseButton == LEFT:
-    global main_menu
-    if main_menu.game_started:
-        global dobbelstenen
-        for d in dobbelstenen:
-            if not d['dobbel'].rolling:
-                d['dobbel'].rollDice()
-        global rollSound
-        if not rollSound.isPlaying():
-            rollSound.play()
-    else:            
-        main_menu.input_check(mouseX, mouseY) 
-        playing = False
-            
-        
-
-def MouseInSpace(x, y, w, h):
-    return ((mouseX > x) and (mouseX < x+w) and (mouseY > y) and (mouseY < y+h))
+    if mouseButton == LEFT:
+        if main_menu == False:
+            return
+        if main_menu.dobbeling:
+            global dobbelstenen
+            global rollSound
+            for d in dobbelstenen:
+                if not d['dobbel'].rolling:
+                    d['dobbel'].rollDice()
+            if not rollSound.isPlaying():
+                rollSound.play()
+        # elif main_menu.inspecting:
+        #     main_menu.dobbeling = True
+        #     main_menu.inspecting = False
+        else:            
+            main_menu.input_check(mouseX, mouseY) 
+            playing = False

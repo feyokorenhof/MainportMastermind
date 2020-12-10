@@ -6,7 +6,6 @@ class Dobbel():
         self.rolling = False
         self.images = images
         self.animationFrame = 0
-
         
     def rollDice(self):
         #Roll calculations:
