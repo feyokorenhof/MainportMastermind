@@ -6,4 +6,4 @@ class MainGame():
         self.paused = False
     
     def draw_static(self):
-        image(self.bg, 0, 0)
+        set(0, 0, self.bg)

@@ -1,11 +1,29 @@
 import StateManager
 import Variables
 class Spelvordering():
-    def __init__(self, goback_btn, images):
-        print('spelvordering yaaas')  
+    def __init__(self, goback_btn, godobbelen_btn, images):
         self.players = StateManager.players
-        self.colors = [{'naam': 'rood', 'kleur': color(255, 0, 0)}, { 'naam': 'groen', 'kleur': color(0, 255, 0)}, { 'naam': 'blauw', 'kleur': color(74, 112, 247)}, { 'naam': 'wit', 'kleur': color(255, 255, 255)}]
+        self.colors = [
+            {'naam': 'rood', 'kleur': color(255, 0, 0)}, 
+            { 'naam': 'yellow', 'kleur': color(0, 255, 255)},
+            { 'naam': 'groen', 'kleur': color(0, 255, 0)}, 
+            { 'naam': 'blauw', 'kleur': color(74, 112, 247)}, 
+            { 'naam': 'purple', 'kleur': color(255,0,255)}
+        ]
+        self.starthavens = [
+            'Rotterdam',
+            'Qatar',
+            'Shanghai',
+            'Singapore',
+            'Kaapstad',
+            'Dakar',
+            'Rio de Janeiro',
+            'Caracas',
+            'Los Angeles',
+            'Quebec'
+        ]
         self.back_btn = goback_btn
+        self.dobbel_btn = godobbelen_btn
         self.images = images
         self.mis = Variables.MouseInSpace
         self.txtBoxFocus = False
@@ -17,6 +35,11 @@ class Spelvordering():
     def render(self):
         # Txtbox
         self.drawTxtBox()
+        
+        # Picker
+        if self.txtBoxFocus:
+            self.drawPicker()
+        
         # Players
         if self.players != {}:
             self.drawPlayers()
@@ -24,15 +47,21 @@ class Spelvordering():
         # Add producten
         self.drawProducten()
         
+        # Go to dobbelen btn
+        image(self.dobbel_btn, width - 200, 200)
         # Back Button
         image(self.back_btn, 20, 20)
-    
+        
     def input_check(self):
         if self.mis(20, 20, 75, 50):
             StateManager.state = StateManager.states.MAINMENU
             self.txtBoxFocus = False
             self.selected = ''
-        elif self.mis(20, 120, 400, 50):
+        elif self.mis(width-200, 200, 100, 100):
+            StateManager.state = StateManager.states.DOBBELEN
+            self.txtBoxFocus = False
+            self.selected = ''
+        elif self.mis(width/2 - 400, height - 800, 800, 50):
             self.txtBoxFocus = True
             self.selected = ''
         elif self.playerSelected():
@@ -43,11 +72,11 @@ class Spelvordering():
             self.txtBoxFocus = False
     
     def playerSelected(self):
-        x = 20
-        y = 170
+        x = width/2 - 400
+        y = height - 750 
         for index, value in enumerate(self.players):
             pY = (y + 20) + (100 * index)
-            if self.mis(x, pY-25, 400, 100):
+            if self.mis(x, pY-25, 800, 100):
                 self.selected = value['naam']
                 
     def productSelected(self):
@@ -61,39 +90,46 @@ class Spelvordering():
             if self.mis(pX, pY, 50, 50):
                 self.selectedProduct = value
                 currentPlayer = list(filter(lambda player: player['naam'] == self.selected, self.players))[0]
+                if len(currentPlayer['inventaris']) >= 14:
+                    return
                 currentPlayer['inventaris'].append(self.selectedProduct)
-                print(StateManager.players)
     
     def drawPlayers(self):
-        x = 20
-        y = 170            
+        x = width/2 - 400
+        y = height - 750         
         for index, value in enumerate(self.players):            
             textSize(20)
             textAlign(CORNER)
             pY = (y + 20) + (100 * index)
             if self.selected == value['naam']:
                 fill(50, 50, 50)
-                rect(x, pY - 25, 400, 100)
+                rect(x, pY - 25, 800, 100)
             fill(self.colors[index]['kleur'])
             text(value['naam'], x, pY)
             if len(value['inventaris']) <= 0:
                 continue
             for index, value in enumerate(value['inventaris'], start=1):
                 pX = x + (index * 50)
-                image(self.images[value], pX, pY)
+                image(self.images[value], pX, pY, 35, 35)
                 
     def drawTxtBox(self):
-        x = 20
-        y = 120
+        x = width/2 - 400
+        y = height - 800
         fill(12, 12, 12)
-        rect(x, y, 400, 400)
+        rect(x, y, 800, 600)
         if self.txtBoxFocus:
             fill(50, 50, 50)
         else:
             fill(25, 25, 25)
-        rect(x, y, 400, 50)
+        rect(x, y, 800, 50)
         fill(255, 255, 255)
         text(self.txt, x + 20, y + 40)
+        
+    def drawPicker(self):
+        x = width/2 - 500
+        y = height - 800
+        fill(12,12,12)
+        rect(x, y, 100, 100)
    
     def drawProducten(self):
         x = width/2 - 400

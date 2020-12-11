@@ -51,8 +51,7 @@ class Dobbel():
             self.animateDice()
             time.sleep(0.5)
         else:
-            self.drawDice()
-            
+            self.drawDice()            
     
 def upperText():
     fill(255, 255, 255) #text color (black)

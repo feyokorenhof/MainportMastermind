@@ -2,12 +2,14 @@ from Dobbel import *
 import StateManager
 import Variables
 class DobbelManager():
-    def __init__(self, images, goback_btn, rollSound):
+    def __init__(self, images, goback_btn, rollSound, storm_sound, cheer_sound):
         self.dobbelstenen = []
         self.back_btn = goback_btn
         self.mis = Variables.MouseInSpace
         self.rollSound = rollSound
         self.rollSound.amp(1.0)  
+        self.storm_sound = storm_sound
+        self.cheer_sound = cheer_sound
         db1 = Dobbel(6, images, {'x' : width/4, 'y' : height/4}, self)
         db2 = Dobbel(6, images, {'x' : width/2 + 50, 'y' : height/4}, self)
         self.dobbelstenen.append({'dobbel': db1, 'ogen': 6, 'gerold': -1})
@@ -31,7 +33,7 @@ class DobbelManager():
         rect(width/2, height - 100, 200, 100)
         fill(255, 255, 255)
         textSize(40)
-        text('Gooi!', width/2, height + 100)
+        text('Gooi!', width/2, height - 100)
         
     def processRoll(self):
         done = False
@@ -45,6 +47,11 @@ class DobbelManager():
             outcome2 = self.dobbelstenen[1]['dobbel'].rolledDice + 1
             
             outcome_str = str(outcome1) + '-' + str(outcome2)
+            if outcome1 == 6 or outcome2 == 6:
+                self.cheer_sound.play()
+            elif outcome1 == 1 or outcome2 == 1:
+                self.storm_sound.play()
+                
             Variables.outcome = Variables.outcomes[outcome_str]
         else:
             Variables.outcome = 'Rolling..'

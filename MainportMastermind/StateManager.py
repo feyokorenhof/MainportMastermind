@@ -13,15 +13,16 @@ muted = False
 players = []
 
 def saveState():
+    if len(players) <= 0:
+        exit()
+        return
     csv_file = 'saves/save.csv'
     csv_columns = ['naam', 'inventaris']
-    print(os.path.exists(csv_file))
     path = os.path.realpath(csv_file).replace('\\', '\\')
-    with open(path, 'w') as csvfile:
+    with open(path, 'wb') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
         writer.writeheader()
-        for data in players[0]:
-            writer.writerow(data)
-
+        for p in players:
+            writer.writerow(p)
         
     exit()

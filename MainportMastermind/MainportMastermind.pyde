@@ -5,6 +5,7 @@ from Spelvordering import *
 import StateManager
 import Variables
 import csv
+import gc
 loaded = False
 main_menu = False
 spelvordering = False
@@ -30,10 +31,12 @@ def setup():
     
     saveFileHandle = open('saves/save.csv')
     saveData = list(csv.DictReader(saveFileHandle))
-    
-    for s in saveData:
-        s['inventaris'] = s['inventaris'].strip('][').split(', ')
-        print(s)
+    if len(saveData) > 0:
+        for s in saveData:
+            s['inventaris'] = s['inventaris'].strip('][').split(', ')
+            for index, value in enumerate(s['inventaris']):
+                s['inventaris'][index] = s['inventaris'][index].strip("'")
+            StateManager.players.append(s)
     
 def draw():
     background(47, 46, 48)  
@@ -104,8 +107,7 @@ def load():
     # Main Menu class
     global main_menu
     global bg_menu
-    main_menu = MainMenu(bg_menu, logo, mm_btns)
-    
+    main_menu = MainMenu(bg_menu, logo, mm_btns)   
     
     # Dobbels
     images = []
@@ -113,10 +115,10 @@ def load():
         _imgstr = 'images/dobbel/dice' + str(i+1) + '.png'
         images.append(loadImage(_imgstr)) 
      
+    storm_sound = SoundFile(this, "../sound/storm.mp3")
+    cheer_sound = SoundFile(this, "../sound/cheer.mp3")
     global dobbelManager
-    dobbelManager = DobbelManager(images, goback_btn, rollSound)
-        
-    
+    dobbelManager = DobbelManager(images, goback_btn, rollSound, storm_sound, cheer_sound)
     
     # Spelvordering
     
@@ -126,8 +128,10 @@ def load():
         images[p] = loadImage('images/producten/' + p + '.png')
         images[p].resize(50, 50)
     
+    godobbelen_btn = loadImage('images/gotodobbelen.png')
+    godobbelen_btn.resize(100, 100)
     global spelvordering
-    spelvordering = Spelvordering(goback_btn, images)
+    spelvordering = Spelvordering(goback_btn, godobbelen_btn, images)
     loaded = True
 
 def mousePressed():
