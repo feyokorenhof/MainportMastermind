@@ -1,4 +1,6 @@
 import os
+import StateManager
+import Variables
 class MainMenu():
     def __init__(self, bg, logo, buttons):
         self.bg_menu = bg
@@ -6,6 +8,7 @@ class MainMenu():
         self.btns = buttons
         self.dobbeling = False
         self.inspecting = False
+        self.mis = Variables.MouseInSpace
     
     # Renders the main menu
     def main_menu(self):   
@@ -17,7 +20,7 @@ class MainMenu():
         # Render buttons
         i = 0
         for b in self.btns:
-            image(b['btn'], _w - 225, height/2 + (150 * i))
+            image(b['btn'], _w - 225, height/2 + (125 * i))
             i += 1
     
     def input_check(self, mX, mY):        
@@ -27,24 +30,20 @@ class MainMenu():
         
         i = 0
         for b in self.btns:
-            nY = y + (150 * i)
-            if MouseInSpace(x, nY, 450, 150):
+            nY = y + (125 * i)
+            if self.mis(x, nY, 450, 150):
                 self.handle_input(b['type'])
                 break
             i += 1
         
     def handle_input(self, type):
-        if type == 'start':
-            self.inspecting = False
-            self.dobbeling = True
+        state = StateManager
+        if type == 'dobbelen':
+            state.state = state.states.DOBBELEN       
         elif type == 'spelvordering':
-            self.dobbeling = False
-            self.inspecting = True
+            state.state = state.states.SPELVORDERING
         elif type == 'handleiding':
             path = os.path.abspath("./resources/handleiding.pdf")
             os.system("start " + path)
         else:
-            exit()
-def MouseInSpace(x, y, w, h):
-    return ((mouseX > x) and (mouseX < x+w) and (mouseY > y) and (mouseY < y+h))
-                        
+            StateManager.saveState()                 
