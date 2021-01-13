@@ -30,9 +30,9 @@ outcomes = {
     '5-5': 'Beweeg een schip met tien ogen of beweeg een schip met vijf ogen en een ander schip met vijf ogen',
     '5-6': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-1': 'Gooi nog een keer met een dobbelsteen voor de kansuitkomst',
-    '6-2': 'Beweeg een schip met twee ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
-    '6-3': 'Beweeg een schip met drie ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
-    '6-4': 'Beweeg een schip met vier ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
+    '6-2': 'Beweeg een schip met twee ogen en gooi nog een keer voor de kansuitkomst',
+    '6-3': 'Beweeg een schip met drie ogen en gooi nog een keer voor de kansuitkomst',
+    '6-4': 'Beweeg een schip met vier ogen en gooi nog een keer voor de kansuitkomst',
     '6-5': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-6': 'Verdeel naar keuze twaalf stappen over beide schepen',
     }

@@ -21,9 +21,14 @@ def saveState():
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
             writer.writeheader()
             for e in range(5):
-                writer.writerow('')
+                try:
+                    writer.writerow('')                    
+                except AttributeError:
+                    pass
+                
         
         exit()
+        return
     else:
         with open(path, 'wb') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
