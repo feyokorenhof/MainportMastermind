@@ -13,18 +13,20 @@ class Dobbel():
         self.parent = parent
         self.b_w = 200
         self.b_h = 100
-        self.d_w = 490
-        self.d_h = 490
+        self.d_w = 200
+        self.d_h = 200
         self.b_x = self.position['x'] + self.d_w/2 - self.b_w/2
         self.b_y = self.position['y'] + 500
         
     def rollDice(self):
         #Roll calculations:
-        self.rolledDice = int(random(1, self.ogen-1))     
+        self.rolledDice = int(random(0, self.ogen-1))     
         self.rolling = True
         
     def drawDice(self):
         img = self.images[self.rolledDice]
+        fill(255)
+        rect(self.position['x']-1, self.position['y']-1, self.d_w+1, self.d_h+1)
         image(img, self.position['x'], self.position['y'], self.d_w, self.d_h)
         self.animationFrame = 0
         self.render()
@@ -33,14 +35,17 @@ class Dobbel():
         if self.rolling == False:
             return                
         img = self.images[self.animationFrame]
+        fill(255)
+        rect(self.position['x']-1, self.position['y']-1, self.d_w+1, self.d_h+1)
         image(img, self.position['x'], self.position['y'], self.d_w, self.d_h)
         
         if self.animationFrame == self.rolledDice or self.rolling == False:
             self.animationFrame = 0
             self.rolling = False 
             self.parent.processRoll()    
-            return   
-        self.animationFrame += 1   
+            return 
+        if frameCount % 15 == 0:  
+            self.animationFrame += 1   
         
     def render(self):
         # Gooi button          
@@ -49,7 +54,6 @@ class Dobbel():
     def update(self):
         if self.rolling:
             self.animateDice()
-            time.sleep(0.5)
         else:
             self.drawDice()            
     

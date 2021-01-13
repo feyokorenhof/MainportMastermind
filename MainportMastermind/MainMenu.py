@@ -2,9 +2,10 @@ import os
 import StateManager
 import Variables
 class MainMenu():
-    def __init__(self, bg, logo, buttons):
+    def __init__(self, bg, logo, miro_btn, buttons):
         self.bg_menu = bg
         self.logo = logo
+        self.miro_btn = miro_btn
         self.btns = buttons
         self.dobbeling = False
         self.inspecting = False
@@ -14,24 +15,26 @@ class MainMenu():
     def main_menu(self):   
         image(self.bg_menu, 0, 0)    
         _w = width/2
-        _h = height/2
-        image(self.logo, _w - (width/5)/2, (height/4) - (height/3)/2)
+        _h = height/3 + 100
+        image(self.logo, _w - (width/5)/2, _h - 250)
+        
+        # Miro button
+        image(self.miro_btn, 25, height-100)
         
         # Render buttons
         i = 0
         for b in self.btns:
-            image(b['btn'], _w - 225, height/2 + (125 * i))
+            image(b['btn'], _w - 175, _h + (100 * i))
             i += 1
     
     def input_check(self, mX, mY):        
-        # Check start btn
-        x = width/2 - 225
-        y = height/2
+        x = width/2 - 175
+        y = height/3 + 100
         
         i = 0
         for b in self.btns:
-            nY = y + (125 * i)
-            if self.mis(x, nY, 450, 150):
+            nY = y + (100 * i)
+            if self.mis(x, nY, 350, 75):
                 self.handle_input(b['type'])
                 break
             i += 1

@@ -17,7 +17,7 @@ img_sound = 0
 img_no_sound = 0
 
 def setup():
-    fullScreen()
+    size(1200, 800)
     global bg_menu
     bg_menu = loadImage('images/bg_menu.jpg')
     bg_menu.resize(width, height)
@@ -83,17 +83,21 @@ def load():
     
     # Load images    
     start_btn = loadImage('images/dobbelstenen.png')
-    start_btn.resize(450, 100)
+    start_btn.resize(350, 75)
     spel_btn = loadImage('images/spelvordering.png')
-    spel_btn.resize(450, 100)
+    spel_btn.resize(350, 75)
     handl_btn = loadImage('images/handleiding.png')
-    handl_btn.resize(450, 100)
+    handl_btn.resize(350, 75)
     exit_btn = loadImage('images/exitbutton.png')
-    exit_btn.resize(450, 100)
+    exit_btn.resize(350, 75)
     goback_btn = loadImage('images/goback.png')
     goback_btn.resize(75, 50)
+    cross_btn = loadImage('images/cross.png')
+    cross_btn.resize(25, 25)
+    miro_btn = loadImage('images/miro.png')
+    miro_btn.resize(100, 75)
     logo = loadImage('images/logo.png')
-    logo.resize(width/5, height/3)
+    logo.resize(width/5, height/4)
     
     global playing
     playing = False
@@ -107,7 +111,7 @@ def load():
     # Main Menu class
     global main_menu
     global bg_menu
-    main_menu = MainMenu(bg_menu, logo, mm_btns)   
+    main_menu = MainMenu(bg_menu, logo, miro_btn, mm_btns)   
     
     # Dobbels
     images = []
@@ -131,7 +135,7 @@ def load():
     godobbelen_btn = loadImage('images/gotodobbelen.png')
     godobbelen_btn.resize(100, 100)
     global spelvordering
-    spelvordering = Spelvordering(goback_btn, godobbelen_btn, images)
+    spelvordering = Spelvordering(goback_btn, godobbelen_btn, cross_btn, images)
     loaded = True
 
 def mousePressed():
@@ -143,6 +147,8 @@ def mousePressed():
         state = StateManager
         if Variables.MouseInSpace(width - 100, height - 100, 75, 75):
             state.muted = not state.muted
+        if Variables.MouseInSpace(25, height-100, 100, 75):
+            link('https://miro.com/app/board/o9J_kkYRyq4=/')
         if state.state == 'dobbelen':
             dobbelManager.input_check()
         elif state.state == 'spelvordering':

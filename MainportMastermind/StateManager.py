@@ -17,7 +17,7 @@ def saveState():
         exit()
         return
     csv_file = 'saves/save.csv'
-    csv_columns = ['naam', 'inventaris']
+    csv_columns = ['naam', 'inventaris', 'haven']
     path = os.path.realpath(csv_file).replace('\\', '\\')
     with open(path, 'wb') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)

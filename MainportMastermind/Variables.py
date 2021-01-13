@@ -12,7 +12,7 @@ outcomes = {
     '2-5': 'Beweeg een schip met zeven ogen of beweeg een schip met twee ogen en een ander schip met vijf ogen',
     '2-6': 'Zet twee stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '3-1': 'Zet drie stappen met een schip naar keuze',
-    '3-2': 'Beweeg een schip met vijf ogen of beweeg een schip met twee ogen en een ander schip met twee ogen',
+    '3-2': 'Beweeg een schip met vijf ogen of beweeg een schip met drie ogen en een ander schip met twee ogen',
     '3-3': 'Beweeg een schip met zes ogen of beweeg een schip met drie ogen en een ander schip met drie ogen',
     '3-4': 'Beweeg een schip met zeven ogen of beweeg een schip met drie ogen en een ander schip met vier ogen',
     '3-5': 'Beweeg een schip met acht ogen of beweeg een schip met drie ogen en een ander schip met vijf ogen',
@@ -29,15 +29,28 @@ outcomes = {
     '5-4': 'Beweeg een schip met negen ogen of beweeg een schip met vijf ogen en een ander schip met vier ogen',
     '5-5': 'Beweeg een schip met tien ogen of beweeg een schip met vijf ogen en een ander schip met vijf ogen',
     '5-6': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
-    '6-1': 'Zet zes stappen met een schip naar keuze',
+    '6-1': 'Gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-2': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met twee ogen',
     '6-3': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met drie ogen',
     '6-4': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met vier ogen',
-    '6-5': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met vijf ogen',
+    '6-5': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-6': 'Verdeel naar keuze twaalf stappen over beide schepen',
     }
 
 outcome = 'Klik op gooi om te beginnen'
+
+havens = [
+    'Rotterdam',
+    'Qatar',
+    'Shanghai',
+    'Singapore',
+    'Kaapstad',
+    'Dakar',
+    'Rio de Janeiro',
+    'Caracas',
+    'Los Angeles',
+    'Quebec',
+]
 
 def MouseInSpace(x, y, w, h):
     return ((mouseX > x) and (mouseX < x+w) and (mouseY > y) and (mouseY < y+h))

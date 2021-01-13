@@ -10,8 +10,8 @@ class DobbelManager():
         self.rollSound.amp(1.0)  
         self.storm_sound = storm_sound
         self.cheer_sound = cheer_sound
-        db1 = Dobbel(6, images, {'x' : width/4, 'y' : height/4}, self)
-        db2 = Dobbel(6, images, {'x' : width/2 + 50, 'y' : height/4}, self)
+        db1 = Dobbel(6, images, {'x' : width/4 + 50, 'y' : 300}, self)
+        db2 = Dobbel(6, images, {'x' : width/2 + 50, 'y' : 300}, self)
         self.dobbelstenen.append({'dobbel': db1, 'ogen': 6, 'gerold': -1})
         self.dobbelstenen.append({'dobbel': db2, 'ogen': 6, 'gerold': -1})
     
@@ -24,8 +24,8 @@ class DobbelManager():
         # Back button
         image(self.back_btn, 20, 20)
         # Outcome text
-        textSize(10)
-        text(Variables.outcome, width/8, 200)
+        textSize(18)
+        text(Variables.outcome, width/2 - len(Variables.outcome) * 4.5, 200)
         # Gooi button
         fill(0, 0, 0)
         rect(width/2, height - 100, 200, 100)
@@ -36,9 +36,10 @@ class DobbelManager():
         text('Gooi!', width/2, height - 100)
         
     def processRoll(self):
+        sum = 0
         done = False
         for d in self.dobbelstenen:
-            done = not d['dobbel'].rolling
+            done = sum + d['dobbel'].animationFrame == 0
         if done:
             outcome1 = 0
             outcome2 = 0
@@ -47,9 +48,9 @@ class DobbelManager():
             outcome2 = self.dobbelstenen[1]['dobbel'].rolledDice + 1
             
             outcome_str = str(outcome1) + '-' + str(outcome2)
-            if outcome1 == 6 or outcome2 == 6:
+            if (outcome1 == 6 or outcome2 == 6) and not StateManager.muted:
                 self.cheer_sound.play()
-            elif outcome1 == 1 or outcome2 == 1:
+            elif (outcome1 == 1 or outcome2 == 1) and not StateManager.muted:
                 self.storm_sound.play()
                 
             Variables.outcome = Variables.outcomes[outcome_str]
@@ -61,6 +62,11 @@ class DobbelManager():
         if self.mis(20, 20, 75, 50):
             StateManager.state = StateManager.states.MAINMENU
         elif self.mis(width/2, height - 100, 200, 100) and not self.rollSound.isPlaying():
+            sum = 0
+            for d in self.dobbelstenen:
+                sum += d['dobbel'].animationFrame
+            if sum > 0:
+                return
             if not StateManager.muted:
                 self.rollSound.play()
             Variables.outcome = 'Rolling..'
