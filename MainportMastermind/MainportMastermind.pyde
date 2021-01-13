@@ -94,6 +94,10 @@ def load():
     goback_btn.resize(75, 50)
     cross_btn = loadImage('images/cross.png')
     cross_btn.resize(25, 25)
+    govordering_btn = loadImage('images/gotovordering.png')
+    govordering_btn.resize(100, 100)
+    godobbelen_btn = loadImage('images/gotodobbelen.png')
+    godobbelen_btn.resize(100, 100)
     miro_btn = loadImage('images/miro.png')
     miro_btn.resize(100, 75)
     logo = loadImage('images/logo.png')
@@ -122,7 +126,7 @@ def load():
     storm_sound = SoundFile(this, "../sound/storm.mp3")
     cheer_sound = SoundFile(this, "../sound/cheer.mp3")
     global dobbelManager
-    dobbelManager = DobbelManager(images, goback_btn, rollSound, storm_sound, cheer_sound)
+    dobbelManager = DobbelManager(images, goback_btn, govordering_btn, rollSound, storm_sound, cheer_sound)
     
     # Spelvordering
     
@@ -130,10 +134,8 @@ def load():
     images = {}
     for p in producten:
         images[p] = loadImage('images/producten/' + p + '.png')
-        images[p].resize(50, 50)
+        images[p].resize(50, 50)    
     
-    godobbelen_btn = loadImage('images/gotodobbelen.png')
-    godobbelen_btn.resize(100, 100)
     global spelvordering
     spelvordering = Spelvordering(goback_btn, godobbelen_btn, cross_btn, images)
     loaded = True

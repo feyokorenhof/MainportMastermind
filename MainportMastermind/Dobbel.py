@@ -31,7 +31,7 @@ class Dobbel():
         self.animationFrame = 0
         self.render()
         
-    def animateDice(self, ):
+    def animateDice(self):
         if self.rolling == False:
             return                
         img = self.images[self.animationFrame]

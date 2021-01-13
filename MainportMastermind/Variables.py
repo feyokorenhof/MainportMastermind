@@ -30,12 +30,22 @@ outcomes = {
     '5-5': 'Beweeg een schip met tien ogen of beweeg een schip met vijf ogen en een ander schip met vijf ogen',
     '5-6': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-1': 'Gooi nog een keer met een dobbelsteen voor de kansuitkomst',
-    '6-2': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met twee ogen',
-    '6-3': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met drie ogen',
-    '6-4': 'Beweeg een schip met zes ogen of beweeg een schip met zes ogen en een ander schip met vier ogen',
+    '6-2': 'Beweeg een schip met twee ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
+    '6-3': 'Beweeg een schip met drie ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
+    '6-4': 'Beweeg een schip met vier ogen of beweeg een schip met zes ogen en gooi nog een keer voor de kansuitkomst',
     '6-5': 'Zet vijf stappen met een schip naar keuze en gooi nog een keer met een dobbelsteen voor de kansuitkomst',
     '6-6': 'Verdeel naar keuze twaalf stappen over beide schepen',
     }
+
+outcomes_kans = {
+
+'1': "Gooi opnieuw tot je 2, 3, 4, of 5 gooit.",
+'2': "Speler mag nog een keer gooien en bij het aantal ogen, dat deze heeft gegooid, 1 optellen of aftrekken. Vervolgens zet u het totale aantal stappen met een schip naar keuze.",
+'3': "Speler mag een grondstof ruilen met een schip naar keuze, als speler geen grondstoffen wil of kan ruilen mag deze 3 stappen zetten. Grondstoffen ruilen kan alleen van schip tot schip.",
+'4': "Wind mee, speler mag nog een keer gooien, het aantal ogen dat speler gooit wordt verdubbeld.",
+'5': "Schipbreuk, sla een beurt over.",
+'6': "Gooi overnieuw tot u 2, 3, 4, of 5 gooit."
+}
 
 outcome = 'Klik op gooi om te beginnen'
 

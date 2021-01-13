@@ -56,7 +56,7 @@ class Spelvordering():
         
         
         # Go to dobbelen btn
-        image(self.dobbel_btn, width - 150, 200)
+        image(self.dobbel_btn, width - 125, 20)
         # Back Button
         image(self.back_btn, 20, 20)
         
@@ -65,7 +65,7 @@ class Spelvordering():
             StateManager.state = StateManager.states.MAINMENU
             self.txtBoxFocus = False
             self.selected = ''
-        elif self.mis(width-150, 200, 100, 100):
+        elif self.mis(width-125, 20, 100, 100):
             StateManager.state = StateManager.states.DOBBELEN
             self.txtBoxFocus = False
             self.selected = ''
@@ -108,6 +108,7 @@ class Spelvordering():
                     return
                 currentPlayer['inventaris'].append(self.selectedProduct)
                 
+                
     def inventoryItemSelected(self):
         if self.selected == '':
             return
@@ -142,12 +143,11 @@ class Spelvordering():
     def drawPlayers(self):
         x = width/2 - 400
         y = height - 650         
+        textSize(20)
         for index, value in enumerate(self.players):            
-            textSize(20)
             textAlign(CORNER)
             pY = (y + 20) + (100 * index)
-            if self.selected == value['naam']:
-                fill(50, 50, 50)
+            if self.selected == value['naam']: fill(50, 50, 50)
             else:
                 noFill()
                 stroke(255)
@@ -157,13 +157,15 @@ class Spelvordering():
             text(value['haven'], x+5, pY + 75)
             
             # Delete player button
-            if self.selected == value['naam']: image(self.cross_btn, x+768, pY-12)
+            if self.selected == value['naam']: 
+                image(self.cross_btn, x+768, pY-12)
             
-            if len(value['inventaris']) <= 0:
+            if len(value['inventaris']) <= 0: 
                 continue
-            for index, value in enumerate(value['inventaris'], start=1):
+            for index, product in enumerate(value['inventaris'], start=1):
                 pX = x + (index * 50)
-                image(self.images[value], pX, pY, 35, 35)
+                if product != '':
+                    image(self.images[product], pX, pY, 35, 35)
                 
     def drawTxtBox(self):
         x = width/2 - 400
@@ -204,8 +206,7 @@ class Spelvordering():
             image(value, pX, pY)   
         
     def drawHavens(self):
-        if not self.txtBoxFocus:
-            return
+        if not self.txtBoxFocus: return
         y = height - 680
         for index, value in enumerate(self.havens):
             _x = 25
@@ -239,10 +240,8 @@ class Spelvordering():
                     # Remove haven from list
                     del self.havens[self.havens.index(self.selectedHaven)]
                     self.selectedHaven = ''
-                    if len(self.players) != len(self.colors):
-                        self.txtBoxFocus = True
-                    else:
-                        self.txtBoxFocus = False
+                    if len(self.players) != len(self.colors): self.txtBoxFocus = True
+                    else: self.txtBoxFocus = False
             elif key == BACKSPACE:
                 if len(self.txt) > 0:
                     if self.txt == 'Deze naam is al in gebruik!' or self.txt == 'Selecteer eerst een haven!':
